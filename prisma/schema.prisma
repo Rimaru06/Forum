@@ -18,6 +18,8 @@ model User {
   name String?
   email String @unique
   password String
+  isAdmin Boolean @default(false)
+  timestamp DateTime @default(now())
   posts Post[]
   comments Comment[]
   likes Like[]
