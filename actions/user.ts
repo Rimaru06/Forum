@@ -1,7 +1,7 @@
 "use server";
 import prisma from "@/db";
 import jwt from "jsonwebtoken";
-import { InputSechema } from "./types";
+import { InputSechema } from "../types/types";
 import { userSchema } from "./validation";
 import {cookies} from "next/headers"
 export async function Signup({name ,email, password } 

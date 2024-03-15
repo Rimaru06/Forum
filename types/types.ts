@@ -2,7 +2,7 @@
 
 
 import z from "zod";
-import { userSchema , postSchema } from "./validation";
+import { userSchema , postSchema } from "../actions/validation";
 
 
 export type InputSechema = z.infer<typeof userSchema>;
