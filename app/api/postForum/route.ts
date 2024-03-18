@@ -1,7 +1,9 @@
 import { NextResponse , NextRequest } from "next/server";
 import prisma from "@/db";
+import { getTokenData } from "@/helpers/getTokenData";
 export async function POST(req : NextRequest)
 {
+    const tokenData = await getTokenData(req);
     const body = await req.json();
     try {
         await prisma.post.create({
@@ -9,7 +11,7 @@ export async function POST(req : NextRequest)
                 title : body.title,
                 content : body.content,
                 imageUrl : body.imageUrl,
-                authorId : body.authorId
+                authorId : tokenData.id
             }
         })
         return NextResponse.json({message: "Post Created Successfully", status: 200});
