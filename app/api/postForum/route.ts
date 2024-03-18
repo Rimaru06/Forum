@@ -4,6 +4,10 @@ import { getTokenData } from "@/helpers/getTokenData";
 export async function POST(req : NextRequest)
 {
     const tokenData = await getTokenData(req);
+    if(!tokenData)
+    {
+        return NextResponse.json({message: "Unauthorized", status: 401});
+    }
     const body = await req.json();
     try {
         await prisma.post.create({
