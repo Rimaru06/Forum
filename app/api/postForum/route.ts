@@ -1,14 +1,12 @@
 import { NextResponse , NextRequest } from "next/server";
 import prisma from "@/db";
 import { getTokenData } from "@/helpers/getTokenData";
-export async function POST(req : NextRequest)
+export async function POST(NextRequest: NextRequest)
 {
-    const tokenData = await getTokenData(req);
-    if(!tokenData)
-    {
-        return NextResponse.json({message: "Unauthorized", status: 401});
-    }
-    const body = await req.json();
+    const tokenData = await getTokenData(NextRequest);
+    if(!tokenData) return NextResponse.json({message: "Unauthorized", status: 401});
+    
+    const body = await NextRequest.json();
     try {
         await prisma.post.create({
             data : {
