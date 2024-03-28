@@ -2,7 +2,8 @@
 import prisma from "@/db";
 import jwt from "jsonwebtoken";
 import { InputSechema } from "../types/types";
-export async  function register({name, email, password} : InputSechema) {
+import { cookies } from "next/headers";
+export async  function register({name, email, password} : InputSechema){
   try {
     const user = await prisma.user.create({
       data: {
@@ -14,14 +15,13 @@ export async  function register({name, email, password} : InputSechema) {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, {
       expiresIn: "7d",
     });
-    return { token ,message: "User Created Successfully", status: 200 };
-    return "Hello World";
+    cookies().set("authtoken", token);
+    return { token, message: "User Created Successfully", status: 200 };
   } catch (error: any) {
     return { message: error.message, status: 400 };
   }
 }
-
-export async function login({email, password} : InputSechema) {
+export async function login({email, password} : InputSechema  , ) {
   try {
     const user = await prisma.user.findFirst({
       where: {
@@ -32,8 +32,8 @@ export async function login({email, password} : InputSechema) {
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, {
         expiresIn: "7d",
       });
+      cookies().set("authtoken", token);
       return {
-        token: token,
         message: "User Logged In Successfully",
         status: 200,
       };
