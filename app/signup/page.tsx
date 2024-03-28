@@ -1,9 +1,10 @@
+import Signup from "@/components/Signup";
 
-
-const page = () => {
+export default async function () {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <Signup />
+    </div>
 
-export default page
+  );
+}
